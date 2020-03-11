@@ -20,7 +20,7 @@ class NoteView: UIView {
     // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.white
+        backgroundColor = .clear
 
         sv([noteArea.style(noteAreaStyle)])
         
@@ -46,10 +46,10 @@ class NoteView: UIView {
     }
     
     func noteAreaStyle(_ v: UITextView) {
-        v.backgroundColor = UIColor.black
+        v.backgroundColor = UIColor(named: "primaryBackground")
         v.font = UIFont.systemFont(ofSize: 20.0, weight: UIFont.Weight.regular)
-        v.textColor = UIColor.white
-        v.tintColor = UIColor.white
+        v.textColor = UIColor(named: "primaryTextColor")
+        v.tintColor = UIColor(named: "primaryTextColor")
     }
 }
 
