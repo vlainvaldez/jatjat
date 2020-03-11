@@ -22,13 +22,38 @@ class NoteVC: UIViewController {
     // MARK: - Life Cycle Methods
     override func loadView() {
         super.loadView()
-        self.view = NoteView()
+        let noteView = NoteView()
+        noteView.delegate = self
+        self.view = noteView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Create Note"
-        
         edgesForExtendedLayout = []
+        
+        setUpNavigation()
+    }
+    
+    
+}
+
+// MARK: - Helper functions
+extension NoteVC {
+    
+    func getView() -> NoteView {
+        return self.view as! NoteView
+    }
+    
+    func setUpNavigation() {
+        let saveButton = getView().saveButton
+        let saveBarButtonItem = UIBarButtonItem(customView: saveButton)
+        navigationItem.rightBarButtonItems = [saveBarButtonItem]        
+    }
+}
+
+extension NoteVC: NoteViewDelegate {
+    func save() {
+        
     }
 }
