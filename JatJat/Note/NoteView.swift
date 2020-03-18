@@ -73,6 +73,8 @@ class NoteView: UIView {
         v.font = UIFont.systemFont(ofSize: 20.0, weight: UIFont.Weight.regular)
         v.textColor = UIColor(named: "primaryTextColor")
         v.tintColor = UIColor(named: "primaryTextColor")
+        v.autocorrectionType = .no
+        v.autocapitalizationType = .none
     }
     
     @objc private func save() {
