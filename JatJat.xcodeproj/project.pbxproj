@@ -19,6 +19,10 @@
 		7C14FC392413F9FA002CF4A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C14FC382413F9FA002CF4A8 /* SceneDelegate.swift */; };
 		7C14FC3F24149EA7002CF4A8 /* KeyBoardManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C14FC3E24149EA7002CF4A8 /* KeyBoardManagerDelegate.swift */; };
 		7C14FC4124149ED3002CF4A8 /* KeyBoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C14FC4024149ED3002CF4A8 /* KeyBoardManager.swift */; };
+		7C5725E92421F3F9006D3A29 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E72421F3F8006D3A29 /* RealmSwift.framework */; };
+		7C5725EA2421F3F9006D3A29 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E72421F3F8006D3A29 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C5725EB2421F3F9006D3A29 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E82421F3F9006D3A29 /* Realm.framework */; };
+		7C5725EC2421F3F9006D3A29 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E82421F3F9006D3A29 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +42,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7C5725ED2421F3F9006D3A29 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7C5725EC2421F3F9006D3A29 /* Realm.framework in Embed Frameworks */,
+				7C5725EA2421F3F9006D3A29 /* RealmSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		7C14FBFC2413F2BC002CF4A8 /* JatJat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JatJat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C14FBFF2413F2BC002CF4A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +75,8 @@
 		7C14FC382413F9FA002CF4A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7C14FC3E24149EA7002CF4A8 /* KeyBoardManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardManagerDelegate.swift; sourceTree = "<group>"; };
 		7C14FC4024149ED3002CF4A8 /* KeyBoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardManager.swift; sourceTree = "<group>"; };
+		7C5725E72421F3F8006D3A29 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
+		7C5725E82421F3F9006D3A29 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +84,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C5725EB2421F3F9006D3A29 /* Realm.framework in Frameworks */,
+				7C5725E92421F3F9006D3A29 /* RealmSwift.framework in Frameworks */,
 				7C14FC332413F52E002CF4A8 /* Stevia in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,6 +114,7 @@
 				7C14FC152413F2C0002CF4A8 /* JatJatTests */,
 				7C14FC202413F2C0002CF4A8 /* JatJatUITests */,
 				7C14FBFD2413F2BC002CF4A8 /* Products */,
+				7C5725E62421F3F8006D3A29 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,6 +219,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		7C5725E62421F3F8006D3A29 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7C5725E82421F3F9006D3A29 /* Realm.framework */,
+				7C5725E72421F3F8006D3A29 /* RealmSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -205,6 +238,8 @@
 				7C14FBF82413F2BC002CF4A8 /* Sources */,
 				7C14FBF92413F2BC002CF4A8 /* Frameworks */,
 				7C14FBFA2413F2BC002CF4A8 /* Resources */,
+				7C5725ED2421F3F9006D3A29 /* Embed Frameworks */,
+				7C5725EE2421F41E006D3A29 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -326,6 +361,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7C5725EE2421F41E006D3A29 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7C14FBF82413F2BC002CF4A8 /* Sources */ = {
@@ -506,6 +563,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"JatJat/Preview Content\"";
 				DEVELOPMENT_TEAM = 3S4MHP69HY;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = JatJat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -526,6 +587,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"JatJat/Preview Content\"";
 				DEVELOPMENT_TEAM = 3S4MHP69HY;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = JatJat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
