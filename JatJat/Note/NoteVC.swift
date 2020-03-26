@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import RealmSwift
 
 class NoteVC: UIViewController {
+    
+    
+    let realm = try! Realm()
     
     // MARK: - Initializer
     init() {
@@ -33,6 +37,8 @@ class NoteVC: UIViewController {
         edgesForExtendedLayout = []
         
         setUpNavigation()
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     
@@ -54,6 +60,15 @@ extension NoteVC {
 
 extension NoteVC: NoteViewDelegate {
     func save() {
+        guard
+            let writing = getView().noteArea.text
+        else { return }
         
+        let note = Note()
+        note.writing = writing
+
+        try! realm.write {
+            realm.add(note)
+        }
     }
 }
