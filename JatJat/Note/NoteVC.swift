@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Down
+import HEXColor
 
 class NoteVC: UIViewController {
     
@@ -40,7 +41,7 @@ class NoteVC: UIViewController {
         setUpNavigation()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         
-        inkTest()
+//        inkTest()
     }
     
     
@@ -60,9 +61,19 @@ extension NoteVC {
     }
     
     func inkTest() {
+        let styleSheet = """
+            * {font-family: Helvetica }
+            code {
+                font-size: 15px;
+                color: \(UIColor(named: "primaryTextColor")!.hexString());
+                background-color: \(UIColor(named: "codeBackground")!.hexString());
+            }
+            pre { font-family: Menlo }
+        """
+        
         let markDown: String = "``` let saveButton = getView().saveButton ```"
         let down = Down(markdownString: markDown)
-        let attributedString = try? down.toAttributedString()
+        let attributedString = try? down.toAttributedString(stylesheet: styleSheet)
         getView().noteArea.attributedText = attributedString
     }
 }
@@ -72,12 +83,15 @@ extension NoteVC: NoteViewDelegate {
         guard
             let writing = getView().noteArea.text
         else { return }
-        
+
         let note = Note()
         note.writing = writing
-
-        try! realm.write {
-            realm.add(note)
-        }
+        
+        
+        let noteOnThisDay = realm.objects(Note.self).filter("dateCreated == %@", Date().easyDate()).first
+        
+//        try! realm.write {
+//            realm.add(note)
+//        }
     }
 }

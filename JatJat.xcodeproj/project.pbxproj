@@ -23,6 +23,8 @@
 		7C5725EA2421F3F9006D3A29 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E72421F3F8006D3A29 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C5725EB2421F3F9006D3A29 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E82421F3F9006D3A29 /* Realm.framework */; };
 		7C5725EC2421F3F9006D3A29 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E82421F3F9006D3A29 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CA3D930242F8B04003D92FA /* HEXColor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA3D92F242F8B04003D92FA /* HEXColor.framework */; };
+		7CA3D931242F8B04003D92FA /* HEXColor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA3D92F242F8B04003D92FA /* HEXColor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CB8F207242C8664002B4349 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB8F206242C8664002B4349 /* Note.swift */; };
 		7CB8F20A242CFFDB002B4349 /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = 7CB8F209242CFFDB002B4349 /* Ink */; };
 		7CB8F20C242D0579002B4349 /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB8F20B242D0578002B4349 /* Down.framework */; };
@@ -55,6 +57,7 @@
 			files = (
 				7C5725EC2421F3F9006D3A29 /* Realm.framework in Embed Frameworks */,
 				7CB8F20D242D0579002B4349 /* Down.framework in Embed Frameworks */,
+				7CA3D931242F8B04003D92FA /* HEXColor.framework in Embed Frameworks */,
 				7C5725EA2421F3F9006D3A29 /* RealmSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -82,6 +85,7 @@
 		7C14FC4024149ED3002CF4A8 /* KeyBoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardManager.swift; sourceTree = "<group>"; };
 		7C5725E72421F3F8006D3A29 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		7C5725E82421F3F9006D3A29 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		7CA3D92F242F8B04003D92FA /* HEXColor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HEXColor.framework; path = Carthage/Build/iOS/HEXColor.framework; sourceTree = "<group>"; };
 		7CB8F206242C8664002B4349 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		7CB8F20B242D0578002B4349 /* Down.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Down.framework; path = Carthage/Build/iOS/Down.framework; sourceTree = "<group>"; };
 		7CF92CB4242617FB00A9AE57 /* RxRealm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRealm.framework; path = Carthage/Build/iOS/RxRealm.framework; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 				7C5725EB2421F3F9006D3A29 /* Realm.framework in Frameworks */,
 				7CB8F20A242CFFDB002B4349 /* Ink in Frameworks */,
 				7C5725E92421F3F9006D3A29 /* RealmSwift.framework in Frameworks */,
+				7CA3D930242F8B04003D92FA /* HEXColor.framework in Frameworks */,
 				7C14FC332413F52E002CF4A8 /* Stevia in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,6 +241,7 @@
 		7C5725E62421F3F8006D3A29 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7CA3D92F242F8B04003D92FA /* HEXColor.framework */,
 				7CB8F20B242D0578002B4349 /* Down.framework */,
 				7CF92CBD2426188600A9AE57 /* RxRelay.framework */,
 				7CF92CBA2426187100A9AE57 /* RxCocoa.framework */,

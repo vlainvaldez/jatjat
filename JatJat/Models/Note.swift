@@ -13,9 +13,19 @@ class Note: Object {
     
     @objc dynamic var id = UUID().uuidString
     @objc dynamic var writing: String = ""
-    @objc dynamic var dateCreated: Date = Date()
+    @objc dynamic var dateCreated: String = Date().easyDate()
     
     override static func primaryKey() -> String? {
        return "id"
      }
+}
+
+extension Date {
+    func easyDate() -> String {
+        let date = Date()
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd"
+        let formattedDate = format.string(from: date)
+        return formattedDate
+    }
 }
