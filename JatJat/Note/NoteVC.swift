@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Down
 
 class NoteVC: UIViewController {
     
@@ -37,8 +38,9 @@ class NoteVC: UIViewController {
         edgesForExtendedLayout = []
         
         setUpNavigation()
-        
         print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
+        inkTest()
     }
     
     
@@ -55,6 +57,13 @@ extension NoteVC {
         let saveButton = getView().saveButton
         let saveBarButtonItem = UIBarButtonItem(customView: saveButton)
         navigationItem.rightBarButtonItems = [saveBarButtonItem]        
+    }
+    
+    func inkTest() {
+        let markDown: String = "``` let saveButton = getView().saveButton ```"
+        let down = Down(markdownString: markDown)
+        let attributedString = try? down.toAttributedString()
+        getView().noteArea.attributedText = attributedString
     }
 }
 

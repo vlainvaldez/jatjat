@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Ink",
+        "repositoryURL": "git@github.com:JohnSundell/Ink.git",
+        "state": {
+          "branch": null,
+          "revision": "878fd897945500be1885f2c88f81f8f909224796",
+          "version": "0.4.0"
+        }
+      },
+      {
         "package": "Stevia",
         "repositoryURL": "git@github.com:freshOS/Stevia.git",
         "state": {
