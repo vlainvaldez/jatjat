@@ -8,18 +8,23 @@
 
 import UIKit
 import SwiftUI
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let realm = try! Realm()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+        let noteOnThisDay = realm.objects(Note.self).filter("dateCreated == %@", Date().easyDate()).first
 
         let mainVC = NoteVC()
+        mainVC.existingNote = noteOnThisDay
+        
         let navigationVC = UINavigationController(rootViewController: mainVC)
         
         // Use a UIHostingController as window root view controller.
@@ -41,7 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-    }
+     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.

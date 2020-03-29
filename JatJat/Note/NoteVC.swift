@@ -12,9 +12,9 @@ import Down
 import HEXColor
 
 class NoteVC: UIViewController {
-    
-    
+
     let realm = try! Realm()
+    var existingNote: Note?
     
     // MARK: - Initializer
     init() {
@@ -40,6 +40,7 @@ class NoteVC: UIViewController {
         
         setEditBarButtonItem()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
+        checkIfNoteExist()
         
 //        inkTest()
     }
@@ -66,6 +67,12 @@ extension NoteVC {
         let saveButton = getView().saveButton
         let saveBarButtonItem = UIBarButtonItem(customView: saveButton)
         navigationItem.setRightBarButton(saveBarButtonItem, animated: true)
+    }
+    
+    func checkIfNoteExist() {
+        if let note = existingNote {
+            getView().noteArea.text = note.writing
+        }
     }
     
     func inkTest() {
@@ -98,15 +105,17 @@ extension NoteVC: NoteViewDelegate {
             let writing = getView().noteArea.text
         else { return }
 
-//        let note = Note()
-//        note.writing = writing
+        let noteOnThisDay = realm.objects(Note.self).filter("dateCreated == %@", Date().easyDate()).first
         
-        
-//        let noteOnThisDay = realm.objects(Note.self).filter("dateCreated == %@", Date().easyDate()).first
-        
-//        try! realm.write {
-//            realm.add(note)
-//        }
+        try! realm.write {
+            if let existingNote = noteOnThisDay {
+                existingNote.writing = writing
+            } else {
+                let note = Note()
+                note.writing = writing
+                realm.add(note)
+            }
+        }
         
         setEditBarButtonItem()
         getView().noteArea.isEditable = false
