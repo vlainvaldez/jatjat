@@ -38,7 +38,7 @@ class NoteVC: UIViewController {
         title = "Create Note"
         edgesForExtendedLayout = []
         
-        setUpNavigation()
+        setEditBarButtonItem()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         
 //        inkTest()
@@ -54,10 +54,18 @@ extension NoteVC {
         return self.view as! NoteView
     }
     
-    func setUpNavigation() {
+    func setEditBarButtonItem() {
+        let editButton = getView().editButton
+        let editBarButtonItem = UIBarButtonItem(
+            customView: editButton
+        )
+        navigationItem.rightBarButtonItems = [editBarButtonItem]
+    }
+    
+    func setSaveBarButtonItem() {
         let saveButton = getView().saveButton
         let saveBarButtonItem = UIBarButtonItem(customView: saveButton)
-        navigationItem.rightBarButtonItems = [saveBarButtonItem]        
+        navigationItem.setRightBarButton(saveBarButtonItem, animated: true)
     }
     
     func inkTest() {
@@ -79,19 +87,28 @@ extension NoteVC {
 }
 
 extension NoteVC: NoteViewDelegate {
+    
+    func edit() {
+        getView().noteArea.isEditable = true
+        setSaveBarButtonItem()
+    }
+    
     func save() {
         guard
             let writing = getView().noteArea.text
         else { return }
 
-        let note = Note()
-        note.writing = writing
+//        let note = Note()
+//        note.writing = writing
         
         
-        let noteOnThisDay = realm.objects(Note.self).filter("dateCreated == %@", Date().easyDate()).first
+//        let noteOnThisDay = realm.objects(Note.self).filter("dateCreated == %@", Date().easyDate()).first
         
 //        try! realm.write {
 //            realm.add(note)
 //        }
+        
+        setEditBarButtonItem()
+        getView().noteArea.isEditable = false
     }
 }

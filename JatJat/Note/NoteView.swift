@@ -11,6 +11,7 @@ import Stevia
 
 protocol NoteViewDelegate: class {
     func save()
+    func edit()
 }
 
 class NoteView: UIView {
@@ -21,6 +22,7 @@ class NoteView: UIView {
     // MARK: - Views
     var noteArea = UITextView()
     let saveButton = UIButton()
+    let editButton = UIButton()
     
     weak var delegate: NoteViewDelegate?
     
@@ -38,16 +40,23 @@ class NoteView: UIView {
         )
         
         noteArea.bottom(0)
-        
+    
         keyBoardManager = KeyBoardManager()
         keyBoardManager.delegate = self
         keyBoardManager.beginObservingKeyboard()
         
         saveButton.style(saveButtonStyle)
+        editButton.style(editButtonStyle)
         
         saveButton.addTarget(
             self,
             action: #selector(NoteView.save),
+            for: .touchUpInside
+        )
+        
+        editButton.addTarget(
+            self,
+            action: #selector(NoteView.edit),
             for: .touchUpInside
         )
     }
@@ -68,6 +77,14 @@ class NoteView: UIView {
         )
     }
     
+    func editButtonStyle(_ v: UIButton) {
+        v.setTitle("Edit", for: .normal)
+        v.setTitleColor(
+            UIColor(named: "primaryTextColor"),
+            for: .normal
+        )
+    }
+    
     func noteAreaStyle(_ v: UITextView) {
         v.backgroundColor = UIColor(named: "primaryBackground")
         v.font = UIFont.systemFont(ofSize: 20.0, weight: UIFont.Weight.regular)
@@ -75,10 +92,15 @@ class NoteView: UIView {
         v.tintColor = UIColor(named: "primaryTextColor")
         v.autocorrectionType = .no
         v.autocapitalizationType = .none
+        v.isEditable = false
     }
     
     @objc private func save() {
         delegate?.save()
+    }
+    
+    @objc private func edit() {
+        delegate?.edit()
     }
 }
 
