@@ -45,6 +45,10 @@ class NoteVC: UIViewController {
 //        inkTest()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkIfNoteExist()
+    }
     
 }
 
@@ -70,9 +74,9 @@ extension NoteVC {
     }
     
     func checkIfNoteExist() {
-        if let note = existingNote {
-            getView().noteArea.text = note.writing
-        }
+        guard let existingNote = getNoteOnSameDay() else { return }
+        getView().noteArea.text = existingNote.writing
+        self.existingNote = existingNote
     }
     
     func inkTest() {
@@ -91,6 +95,12 @@ extension NoteVC {
         let attributedString = try? down.toAttributedString(stylesheet: styleSheet)
         getView().noteArea.attributedText = attributedString
     }
+    
+    func getNoteOnSameDay() -> Note? {
+        let noteOnThisDay = realm.objects(Note.self)
+            .filter("dateCreated == %@", Date().easyDate()).first
+        return noteOnThisDay
+    }
 }
 
 extension NoteVC: NoteViewDelegate {
@@ -105,7 +115,7 @@ extension NoteVC: NoteViewDelegate {
             let writing = getView().noteArea.text
         else { return }
 
-        let noteOnThisDay = realm.objects(Note.self).filter("dateCreated == %@", Date().easyDate()).first
+        let noteOnThisDay = getNoteOnSameDay()
         
         try! realm.write {
             if let existingNote = noteOnThisDay {
