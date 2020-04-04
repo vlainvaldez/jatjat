@@ -1,3 +1,5 @@
 github "realm/realm-cocoa"
 github "iwasrobbed/Down"
 github "yeahdongcn/UIColor-Hex-Swift" >= 5.1.1
+github "RxSwiftCommunity/RxDataSources" ~> 4.0
+github "ReactiveX/RxSwift" ~> 5.0

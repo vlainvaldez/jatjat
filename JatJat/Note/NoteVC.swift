@@ -48,6 +48,8 @@ class NoteVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkIfNoteExist()
+        
+        navigationController?.navigationBar.tintColor = UIColor(named: "primaryTextColor")        
     }
     
 }
@@ -59,7 +61,7 @@ extension NoteVC {
         return self.view as! NoteView
     }
     
-    func setEditBarButtonItem() {
+    private func setEditBarButtonItem() {
         let editButton = getView().editButton
         let editBarButtonItem = UIBarButtonItem(
             customView: editButton
@@ -67,19 +69,19 @@ extension NoteVC {
         navigationItem.rightBarButtonItems = [editBarButtonItem]
     }
     
-    func setSaveBarButtonItem() {
+    private func setSaveBarButtonItem() {
         let saveButton = getView().saveButton
         let saveBarButtonItem = UIBarButtonItem(customView: saveButton)
         navigationItem.setRightBarButton(saveBarButtonItem, animated: true)
     }
     
-    func checkIfNoteExist() {
+    private func checkIfNoteExist() {
         guard let existingNote = getNoteOnSameDay() else { return }
         getView().noteArea.text = existingNote.writing
         self.existingNote = existingNote
     }
     
-    func inkTest() {
+    private func inkTest() {
         let styleSheet = """
             * {font-family: Helvetica }
             code {
@@ -96,7 +98,7 @@ extension NoteVC {
         getView().noteArea.attributedText = attributedString
     }
     
-    func getNoteOnSameDay() -> Note? {
+    private func getNoteOnSameDay() -> Note? {
         let noteOnThisDay = realm.objects(Note.self)
             .filter("dateCreated == %@", Date().easyDate()).first
         return noteOnThisDay

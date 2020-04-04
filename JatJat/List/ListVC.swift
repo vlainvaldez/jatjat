@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import RealmSwift
+import RxDataSources
+import RxSwift
 
 class ListVC: UIViewController {
+    
+    let realm = try! Realm()
+    let disposeBag = DisposeBag()
+    var notes = [Note]()
     
     // MARK: - Initializer
     init() {
@@ -29,9 +36,28 @@ class ListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        edgesForExtendedLayout = []
         
         setNavigationBar()
         push(vc: NoteVC())
+        
+        getNotes()
+        setTableViewDataSource()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: " ",
+            style: .plain,
+            target: nil,
+            action: nil
+        )
+    }
+    
+    func getView() -> ListView {
+        return self.view as! ListView
     }
 }
 
@@ -44,5 +70,41 @@ extension ListVC {
     
     private func push(vc: UIViewController) {
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func getNotes() {
+        notes = self.realm.objects(Note.self).toArray()
+    }
+    
+    private func setTableViewDataSource() {
+        let data = Observable<[Note]>.just(notes)
+        let tableView = getView().tableView
+        
+        data.bind(
+            to: tableView.rx.items(cellIdentifier: ItemRow.identifier)
+        ) { index, model, cell in
+            guard let cell = cell as? ItemRow else { return }
+            cell.configure(with: model)
+        }.disposed(by: self.disposeBag)
+        
+        tableView.rx.setDelegate(self).disposed(by: self.disposeBag)
+        
+        tableView.rx.modelSelected(Note.self).subscribe(onNext: { note in
+            
+        }).disposed(by: self.disposeBag)
+    }
+}
+
+extension ListVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
+    }
+    
+}
+
+extension Results {
+    func toArray() -> [Element] {
+        return compactMap { $0 }
     }
 }
