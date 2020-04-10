@@ -14,10 +14,11 @@ import HEXColor
 class NoteVC: UIViewController {
 
     let realm = try! Realm()
-    var existingNote: Note?
+    var model: Note?
     
     // MARK: - Initializer
-    init() {
+    init(model: Note? = nil) {
+        self.model = model
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,16 +40,18 @@ class NoteVC: UIViewController {
         edgesForExtendedLayout = []
         
         setEditBarButtonItem()
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
-        checkIfNoteExist()
         
-//        inkTest()
+        if let note = self.model {
+            render(note: note)
+        } else {
+            checkIfNoteExist()
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkIfNoteExist()
-        
+                
         navigationController?.navigationBar.tintColor = UIColor(named: "primaryTextColor")        
     }
     
@@ -75,10 +78,15 @@ extension NoteVC {
         navigationItem.setRightBarButton(saveBarButtonItem, animated: true)
     }
     
+    private func render(note: Note) {
+        getView().noteArea.text = note.writing
+        self.model = note
+    }
+    
     private func checkIfNoteExist() {
-        guard let existingNote = getNoteOnSameDay() else { return }
-        getView().noteArea.text = existingNote.writing
-        self.existingNote = existingNote
+        guard let note = getNoteOnSameDay() else { return }
+        getView().noteArea.text = note.writing
+        self.model = note
     }
     
     private func inkTest() {

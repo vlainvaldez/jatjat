@@ -42,7 +42,7 @@ class ListVC: UIViewController {
         push(vc: NoteVC())
         
         getNotes()
-        setTableViewDataSource()
+        bindTableViewDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +76,7 @@ extension ListVC {
         notes = self.realm.objects(Note.self).toArray()
     }
     
-    private func setTableViewDataSource() {
+    private func bindTableViewDataSource() {
         let data = Observable<[Note]>.just(notes)
         let tableView = getView().tableView
         
@@ -89,8 +89,9 @@ extension ListVC {
         
         tableView.rx.setDelegate(self).disposed(by: self.disposeBag)
         
-        tableView.rx.modelSelected(Note.self).subscribe(onNext: { note in
-            
+        tableView.rx.modelSelected(Note.self).subscribe(onNext: { [weak self] note in
+            let vc = NoteVC(model: note)
+            self?.push(vc: vc)
         }).disposed(by: self.disposeBag)
     }
 }
