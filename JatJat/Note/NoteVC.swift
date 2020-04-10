@@ -79,7 +79,8 @@ extension NoteVC {
     }
     
     private func render(note: Note) {
-        getView().noteArea.text = note.writing
+//        getView().noteArea.text = note.writing
+        renderMarkdown(note: note.writing)
         self.model = note
     }
     
@@ -89,7 +90,7 @@ extension NoteVC {
         self.model = note
     }
     
-    private func inkTest() {
+    private func renderMarkdown(note: String) {
         let styleSheet = """
             * {font-family: Helvetica }
             code {
@@ -100,8 +101,7 @@ extension NoteVC {
             pre { font-family: Menlo }
         """
         
-        let markDown: String = "``` let saveButton = getView().saveButton ```"
-        let down = Down(markdownString: markDown)
+        let down = Down(markdownString: note)
         let attributedString = try? down.toAttributedString(stylesheet: styleSheet)
         getView().noteArea.attributedText = attributedString
     }
@@ -116,7 +116,8 @@ extension NoteVC {
 extension NoteVC: NoteViewDelegate {
     
     func edit() {
-        getView().noteArea.isEditable = true
+        getView().noteArea.isEditable = true                
+        getView().noteArea.text = model?.writing
         setSaveBarButtonItem()
     }
     
@@ -124,16 +125,22 @@ extension NoteVC: NoteViewDelegate {
         guard
             let writing = getView().noteArea.text
         else { return }
-
-        let noteOnThisDay = getNoteOnSameDay()
         
-        try! realm.write {
-            if let existingNote = noteOnThisDay {
-                existingNote.writing = writing
-            } else {
-                let note = Note()
+        if let note = model {
+            try! realm.write {
                 note.writing = writing
-                realm.add(note)
+            }
+        } else {
+            let noteOnThisDay = getNoteOnSameDay()
+            
+            try! realm.write {
+                if let existingNote = noteOnThisDay {
+                    existingNote.writing = writing
+                } else {
+                    let note = Note()
+                    note.writing = writing
+                    realm.add(note)
+                }
             }
         }
         
