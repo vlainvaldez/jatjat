@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
-import Down
+//import Down
 import HEXColor
+import Ink
 
 class NoteVC: UIViewController {
 
@@ -86,24 +87,17 @@ extension NoteVC {
     
     private func checkIfNoteExist() {
         guard let note = getNoteOnSameDay() else { return }
-        getView().noteArea.text = note.writing
+        renderMarkdown(note: note.writing)
         self.model = note
     }
     
     private func renderMarkdown(note: String) {
-        let styleSheet = """
-            * {font-family: Helvetica }
-            code {
-                font-size: 15px;
-                color: \(UIColor(named: "primaryTextColor")!.hexString());
-                background-color: \(UIColor(named: "codeBackground")!.hexString());
-            }
-            pre { font-family: Menlo }
-        """
         
-        let down = Down(markdownString: note)
-        let attributedString = try? down.toAttributedString(stylesheet: styleSheet)
-        getView().noteArea.attributedText = attributedString
+        let data = Text.render(note)
+        
+        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+            getView().noteArea.attributedText = attributedString
+        }
     }
     
     private func getNoteOnSameDay() -> Note? {
@@ -116,8 +110,15 @@ extension NoteVC {
 extension NoteVC: NoteViewDelegate {
     
     func edit() {
-        getView().noteArea.isEditable = true                
-        getView().noteArea.text = model?.writing
+        getView().noteArea.isEditable = true
+        
+        let attributes = [
+            NSAttributedString.Key.foregroundColor: UIColor(named: "primaryTextColor"),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: UIFont.Weight.regular)
+        ]
+        
+        let attributedString = NSAttributedString(string: model!.writing, attributes: attributes as [NSAttributedString.Key : Any])
+        getView().noteArea.attributedText = attributedString
         setSaveBarButtonItem()
     }
     
@@ -146,5 +147,6 @@ extension NoteVC: NoteViewDelegate {
         
         setEditBarButtonItem()
         getView().noteArea.isEditable = false
+        renderMarkdown(note: writing)
     }
 }

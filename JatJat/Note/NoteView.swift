@@ -87,7 +87,7 @@ class NoteView: UIView {
     
     func noteAreaStyle(_ v: UITextView) {
         v.backgroundColor = UIColor(named: "primaryBackground")
-        v.font = UIFont.systemFont(ofSize: 20.0, weight: UIFont.Weight.regular)
+        v.font = UIFont.systemFont(ofSize: 15.0, weight: UIFont.Weight.regular)
         v.textColor = UIColor(named: "primaryTextColor")
         v.tintColor = UIColor(named: "primaryTextColor")
         v.autocorrectionType = .no
