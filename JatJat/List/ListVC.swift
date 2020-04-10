@@ -66,6 +66,14 @@ extension ListVC {
     
     private func setNavigationBar() {
         navigationItem.title = "Scratch Pad"
+        
+        let view: UIBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(ListVC.addNote)
+        )
+        
+        navigationItem.rightBarButtonItems = [view]
     }
     
     private func push(vc: UIViewController) {
@@ -94,6 +102,11 @@ extension ListVC {
             self?.push(vc: vc)
         }).disposed(by: self.disposeBag)
     }
+    
+    @objc private func addNote() {
+        let vc = NoteVC()
+        self.push(vc: vc)
+    }
 }
 
 extension ListVC: UITableViewDelegate {
@@ -101,7 +114,6 @@ extension ListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60.0
     }
-    
 }
 
 extension Results {

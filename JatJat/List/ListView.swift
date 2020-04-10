@@ -28,11 +28,13 @@ class ListView: UIView {
         
         tableView.register(ItemRow.self, forCellReuseIdentifier: ItemRow.identifier)
     }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func tableViewStyle(_ v: UITableView) {
+        
     }
 }
