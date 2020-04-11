@@ -23,7 +23,7 @@ class ItemRow: UITableViewCell {
         
         layout(
             0,
-            |-20-label,
+            |-20-label-|,
             0
         )
         
