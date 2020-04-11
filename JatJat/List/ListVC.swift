@@ -10,12 +10,14 @@ import UIKit
 import RealmSwift
 import RxDataSources
 import RxSwift
+import RxRealm
+import RxCocoa
 
 class ListVC: UIViewController {
     
     let realm = try! Realm()
     let disposeBag = DisposeBag()
-    var notes = [Note]()
+    var notesObservable: BehaviorRelay<[Note]> = BehaviorRelay<[Note]>(value: [Note]())
     
     // MARK: - Initializer
     init() {
@@ -41,7 +43,7 @@ class ListVC: UIViewController {
         setNavigationBar()
         push(vc: NoteVC())
         
-        getNotes()
+        bindNotes()
         bindTableViewDataSource()
     }
     
@@ -58,6 +60,10 @@ class ListVC: UIViewController {
     
     func getView() -> ListView {
         return self.view as! ListView
+    }
+    
+    func getTableView() -> UITableView {
+        return getView().tableView
     }
 }
 
@@ -80,24 +86,25 @@ extension ListVC {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func getNotes() {
-        notes = self.realm.objects(Note.self).toArray()
+    private func bindNotes() {
+        let realmNotes = self.realm.objects(Note.self)
+        
+        Observable.array(from: realmNotes)
+            .bind(to: self.notesObservable)
+            .disposed(by: self.disposeBag)
     }
     
     private func bindTableViewDataSource() {
-        let data = Observable<[Note]>.just(notes)
-        let tableView = getView().tableView
-        
-        data.bind(
-            to: tableView.rx.items(cellIdentifier: ItemRow.identifier)
+        notesObservable.bind(
+            to: getTableView().rx.items(cellIdentifier: ItemRow.identifier)
         ) { index, model, cell in
             guard let cell = cell as? ItemRow else { return }
             cell.configure(with: model)
         }.disposed(by: self.disposeBag)
         
-        tableView.rx.setDelegate(self).disposed(by: self.disposeBag)
+        getTableView().rx.setDelegate(self).disposed(by: self.disposeBag)
         
-        tableView.rx.modelSelected(Note.self).subscribe(onNext: { [weak self] note in
+        getTableView().rx.modelSelected(Note.self).subscribe(onNext: { [weak self] note in
             let vc = NoteVC(model: note)
             self?.push(vc: vc)
         }).disposed(by: self.disposeBag)
