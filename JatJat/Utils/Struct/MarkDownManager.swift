@@ -28,7 +28,7 @@ struct MarkDownManager {
                 background-color: \(UIColor(named: "dark")!.hexString());
                 font-family: Menlo;
                 margin: 10px;
-                display: block;
+                display: inline;
             }
             
             h1, h2, h3,

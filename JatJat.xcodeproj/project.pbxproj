@@ -24,6 +24,7 @@
 		7C5725EB2421F3F9006D3A29 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E82421F3F9006D3A29 /* Realm.framework */; };
 		7C5725EC2421F3F9006D3A29 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5725E82421F3F9006D3A29 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C6273B62441955C00F7AB88 /* MarkDownManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6273B52441955C00F7AB88 /* MarkDownManager.swift */; };
+		7C6273BA24419FC400F7AB88 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6273B924419FC400F7AB88 /* String+Extensions.swift */; };
 		7CA3D930242F8B04003D92FA /* HEXColor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA3D92F242F8B04003D92FA /* HEXColor.framework */; };
 		7CA3D931242F8B04003D92FA /* HEXColor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA3D92F242F8B04003D92FA /* HEXColor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CA3D93A2437505B003D92FA /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3D9392437505B003D92FA /* ListVC.swift */; };
@@ -102,6 +103,7 @@
 		7C5725E72421F3F8006D3A29 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		7C5725E82421F3F9006D3A29 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		7C6273B52441955C00F7AB88 /* MarkDownManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDownManager.swift; sourceTree = "<group>"; };
+		7C6273B924419FC400F7AB88 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		7CA3D92F242F8B04003D92FA /* HEXColor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HEXColor.framework; path = Carthage/Build/iOS/HEXColor.framework; sourceTree = "<group>"; };
 		7CA3D9392437505B003D92FA /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		7CA3D93B24375070003D92FA /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		7C14FBFE2413F2BC002CF4A8 /* JatJat */ = {
 			isa = PBXGroup;
 			children = (
+				7C6273B724419FA900F7AB88 /* Common */,
 				7CB8F205242C7E6F002B4349 /* Models */,
 				7C14FBFF2413F2BC002CF4A8 /* AppDelegate.swift */,
 				7C14FC382413F9FA002CF4A8 /* SceneDelegate.swift */,
@@ -289,6 +292,22 @@
 				7C6273B52441955C00F7AB88 /* MarkDownManager.swift */,
 			);
 			path = Struct;
+			sourceTree = "<group>";
+		};
+		7C6273B724419FA900F7AB88 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7C6273B824419FB100F7AB88 /* Extensions */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7C6273B824419FB100F7AB88 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7C6273B924419FC400F7AB88 /* String+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		7CA3D93824375024003D92FA /* List */ = {
@@ -476,6 +495,7 @@
 				7C14FC002413F2BC002CF4A8 /* AppDelegate.swift in Sources */,
 				7CB8F207242C8664002B4349 /* Note.swift in Sources */,
 				7C14FC4124149ED3002CF4A8 /* KeyBoardManager.swift in Sources */,
+				7C6273BA24419FC400F7AB88 /* String+Extensions.swift in Sources */,
 				7CA3D93A2437505B003D92FA /* ListVC.swift in Sources */,
 				7C14FC3F24149EA7002CF4A8 /* KeyBoardManagerDelegate.swift in Sources */,
 				7C14FC372413F59E002CF4A8 /* NoteView.swift in Sources */,

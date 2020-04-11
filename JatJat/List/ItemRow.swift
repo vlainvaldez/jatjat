@@ -45,6 +45,11 @@ extension ItemRow {
     static var identifier = "ItemRow"
     
     func configure(with note: Note) {
-        label.text = note.writing
+        
+        let trimMarkDown = note.writing
+            .withoutSpecialCharacters
+            .withoutNewLineCharacters
+        
+        label.text = trimMarkDown
     }
 }
