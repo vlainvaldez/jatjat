@@ -80,7 +80,6 @@ extension NoteVC {
     }
     
     private func render(note: Note) {
-//        getView().noteArea.text = note.writing
         renderMarkdown(note: note.writing)
         self.model = note
     }
@@ -93,7 +92,7 @@ extension NoteVC {
     
     private func renderMarkdown(note: String) {
         
-        let data = Text.render(note)
+        let data = MarkDownManager.render(note)
         
         if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
             getView().noteArea.attributedText = attributedString
