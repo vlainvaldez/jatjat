@@ -111,13 +111,16 @@ extension NoteVC: NoteViewDelegate {
     func edit() {
         getView().noteArea.isEditable = true
         
-        let attributes = [
-            NSAttributedString.Key.foregroundColor: UIColor(named: "primaryTextColor"),
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: UIFont.Weight.regular)
-        ]
+        if let note = model {
+            let attributes = [
+                NSAttributedString.Key.foregroundColor: UIColor(named: "primaryTextColor"),
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: UIFont.Weight.regular)
+            ]
+            
+            let attributedString = NSAttributedString(string: note.writing, attributes: attributes as [NSAttributedString.Key : Any])
+            getView().noteArea.attributedText = attributedString
+        }
         
-        let attributedString = NSAttributedString(string: model!.writing, attributes: attributes as [NSAttributedString.Key : Any])
-        getView().noteArea.attributedText = attributedString
         setSaveBarButtonItem()
     }
     
