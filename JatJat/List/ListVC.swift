@@ -95,14 +95,14 @@ extension ListVC {
     }
     
     private func bindNotes() {
-        let realmNotes = self.realm.objects(Note.self)
+        let realmNotes = realm.objects(Note.self)
         Observable.array(from: realmNotes)
             .bind(to: self.notesObservable)
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
-        self.notesObservable.subscribe(onNext: { [weak self] notes in
+        notesObservable.subscribe(onNext: { [weak self] notes in
             self?.updateTableView(animated: true, dataProvider: notes)
-        }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
     }
     
     @objc private func addNote() {
@@ -162,6 +162,14 @@ extension ListVC: UITableViewDelegate {
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
         return swipeActions
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let note = notesObservable.value[indexPath.item]
+        let vc = NoteVC(model: note)
+        
+        push(vc: vc)
     }
 }
 
