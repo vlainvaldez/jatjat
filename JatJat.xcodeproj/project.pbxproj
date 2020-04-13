@@ -44,8 +44,6 @@
 		7CA3D9482438BD9E003D92FA /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF92CBA2426187100A9AE57 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CB8F207242C8664002B4349 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB8F206242C8664002B4349 /* Note.swift */; };
 		7CB8F20A242CFFDB002B4349 /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = 7CB8F209242CFFDB002B4349 /* Ink */; };
-		7CB8F20C242D0579002B4349 /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB8F20B242D0578002B4349 /* Down.framework */; };
-		7CB8F20D242D0579002B4349 /* Down.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB8F20B242D0578002B4349 /* Down.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +73,6 @@
 				7CA3D94224377C6A003D92FA /* Differentiator.framework in Embed Frameworks */,
 				7C5725EC2421F3F9006D3A29 /* Realm.framework in Embed Frameworks */,
 				7CA3D9462438BD95003D92FA /* RxSwift.framework in Embed Frameworks */,
-				7CB8F20D242D0579002B4349 /* Down.framework in Embed Frameworks */,
 				7C6273C1244207F600F7AB88 /* RxRelay.framework in Embed Frameworks */,
 				7CA3D9482438BD9E003D92FA /* RxCocoa.framework in Embed Frameworks */,
 				7CA3D93F24377C57003D92FA /* RxDataSources.framework in Embed Frameworks */,
@@ -129,7 +126,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CB8F20C242D0579002B4349 /* Down.framework in Frameworks */,
 				7C5725EB2421F3F9006D3A29 /* Realm.framework in Frameworks */,
 				7CA3D94124377C6A003D92FA /* Differentiator.framework in Frameworks */,
 				7CB8F20A242CFFDB002B4349 /* Ink in Frameworks */,
@@ -483,7 +479,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 			);
 			outputFileListPaths = (
 			);

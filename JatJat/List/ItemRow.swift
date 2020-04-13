@@ -42,7 +42,7 @@ class ItemRow: UITableViewCell {
 
 // MARK: - Public APIs
 extension ItemRow {
-    static var identifier = "ItemRow"
+    static var identifier = String(describing: ItemRow.self)
     
     func configure(with note: Note) {
         

@@ -19,6 +19,8 @@ class ListVC: UIViewController {
     let disposeBag = DisposeBag()
     var notesObservable: BehaviorRelay<[Note]> = BehaviorRelay<[Note]>(value: [Note]())
     
+    private var dataSource: ItemDataSource!
+    
     // MARK: - Initializer
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -42,9 +44,15 @@ class ListVC: UIViewController {
         
         setNavigationBar()
         push(vc: NoteVC())
-        
+
+        getTableView().register(ItemRow.self, forCellReuseIdentifier: ItemRow.identifier)
+        getTableView().delegate = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setUpDataSource()
         bindNotes()
-        bindTableViewDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,25 +96,12 @@ extension ListVC {
     
     private func bindNotes() {
         let realmNotes = self.realm.objects(Note.self)
-        
         Observable.array(from: realmNotes)
             .bind(to: self.notesObservable)
             .disposed(by: self.disposeBag)
-    }
-    
-    private func bindTableViewDataSource() {
-        notesObservable.bind(
-            to: getTableView().rx.items(cellIdentifier: ItemRow.identifier)
-        ) { index, model, cell in
-            guard let cell = cell as? ItemRow else { return }
-            cell.configure(with: model)
-        }.disposed(by: self.disposeBag)
         
-        getTableView().rx.setDelegate(self).disposed(by: self.disposeBag)
-        
-        getTableView().rx.modelSelected(Note.self).subscribe(onNext: { [weak self] note in
-            let vc = NoteVC(model: note)
-            self?.push(vc: vc)
+        self.notesObservable.subscribe(onNext: { [weak self] notes in
+            self?.updateTableView(animated: true, dataProvider: notes)
         }).disposed(by: self.disposeBag)
     }
     
@@ -114,17 +109,74 @@ extension ListVC {
         let vc = NoteVC()
         self.push(vc: vc)
     }
+    
+    func setUpDataSource() {
+        dataSource = ItemDataSource(
+            tableView: getTableView(),
+            cellProvider: { (tableView, indexPath, _) -> UITableViewCell? in
+            
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier:
+                ItemRow.identifier, for: indexPath) as! ItemRow
+                
+            cell.configure(with: self.notesObservable.value[indexPath.item])
+            
+            return cell
+        })
+    }
+    
+    func updateTableView(animated: Bool, dataProvider: [Note]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Note>()
+        snapshot.appendSections([.main])
+      snapshot.appendItems(dataProvider, toSection: .main)
+      dataSource.apply(snapshot, animatingDifferences: animated)
+    }
+    
+    private func delete(_ note: Note) {
+        
+        try! realm.write {
+            realm.delete(note)
+        }
+    }
 }
 
 extension ListVC: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60.0
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let contextItem = UIContextualAction(
+        style: .destructive,
+        title: "Delete") {  [weak self] (contextualAction, view, boolValue) in
+        
+            guard let self = self else { return }
+            let model = self.notesObservable.value[indexPath.item]
+                
+            var snapshot = self.dataSource.snapshot()
+            snapshot.deleteItems([model])
+            self.dataSource.apply(snapshot)
+            self.delete(model)
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+        return swipeActions
     }
 }
 
 extension Results {
     func toArray() -> [Element] {
         return compactMap { $0 }
+    }
+}
+
+enum Section {
+  case main
+}
+
+class ItemDataSource: UITableViewDiffableDataSource<Section, Note>{
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
 }
