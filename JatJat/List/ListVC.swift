@@ -16,7 +16,7 @@ import RxCocoa
 class ListVC: UIViewController {
     
     let realm = try! Realm()
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var notesObservable: BehaviorRelay<[Note]> = BehaviorRelay<[Note]>(value: [Note]())
     
     private var dataSource: ItemDataSource!
@@ -47,12 +47,14 @@ class ListVC: UIViewController {
 
         getTableView().register(ItemRow.self, forCellReuseIdentifier: ItemRow.identifier)
         getTableView().delegate = self
+        
+        setUpDataSource()
+        bindNotes()
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setUpDataSource()
-        bindNotes()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,9 +101,9 @@ extension ListVC {
         Observable.array(from: realmNotes)
             .bind(to: self.notesObservable)
             .disposed(by: disposeBag)
-        
+
         notesObservable.subscribe(onNext: { [weak self] notes in
-            self?.updateTableView(animated: true, dataProvider: notes)
+            self?.updateTableView(animated: false, dataProvider: notes)
         }).disposed(by: disposeBag)
     }
     
@@ -113,14 +115,11 @@ extension ListVC {
     func setUpDataSource() {
         dataSource = ItemDataSource(
             tableView: getTableView(),
-            cellProvider: { (tableView, indexPath, _) -> UITableViewCell? in
-            
+            cellProvider: { (tableView, indexPath, note) -> UITableViewCell? in
             let cell = tableView.dequeueReusableCell(
                 withIdentifier:
                 ItemRow.identifier, for: indexPath) as! ItemRow
-                
-            cell.configure(with: self.notesObservable.value[indexPath.item])
-            
+            cell.configure(with: note)
             return cell
         })
     }
@@ -132,8 +131,7 @@ extension ListVC {
       dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
-    private func delete(_ note: Note) {
-        
+    private func delete(note: Note) {
         try! realm.write {
             realm.delete(note)
         }
@@ -157,18 +155,16 @@ extension ListVC: UITableViewDelegate {
                 
             var snapshot = self.dataSource.snapshot()
             snapshot.deleteItems([model])
-            self.dataSource.apply(snapshot)
-            self.delete(model)
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+            self.delete(note: model)
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
         return swipeActions
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         let note = notesObservable.value[indexPath.item]
         let vc = NoteVC(model: note)
-        
         push(vc: vc)
     }
 }
