@@ -37,5 +37,6 @@ class ListView: UIView {
     
     func tableViewStyle(_ v: UITableView) {
         v.backgroundColor = .clear
+        v.separatorStyle = .none
     }
 }

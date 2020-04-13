@@ -12,18 +12,21 @@ import Stevia
 class ItemRow: UITableViewCell {
     
     var label = UILabel()
+    var customSeparator = UIView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = UIColor(named: "primaryBackground")
+        backgroundColor = UIColor(named: "cellBackground")
         selectionStyle = .none
         
-        sv(label)
+        sv(label, customSeparator.style(customSeparator))
         
         layout(
             0,
             |-20-label-|,
+            0,
+            |-customSeparator-| ~ 1,
             0
         )
         
@@ -37,6 +40,10 @@ class ItemRow: UITableViewCell {
         v.textColor = UIColor(named: "primaryTextColor")
         v.font = UIFont.systemFont(ofSize: 15.0, weight: .medium)
         v.lineBreakMode = .byTruncatingTail
+    }
+    
+    private func customSeparator(_ v: UIView) {
+        v.backgroundColor = UIColor.gray.withAlphaComponent(0.8)
     }
 }
 
