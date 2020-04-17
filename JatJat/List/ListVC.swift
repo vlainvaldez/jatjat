@@ -16,7 +16,7 @@ import RxCocoa
 class ListVC: UIViewController {
     
     let realm = try! Realm()
-    var disposeBag = DisposeBag()
+    var disposeBag: DisposeBag!
     var notesObservable: BehaviorRelay<[Note]> = BehaviorRelay<[Note]>(value: [Note]())
     
     private var dataSource: ItemDataSource!
@@ -39,7 +39,7 @@ class ListVC: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.disposeBag = DisposeBag()
         edgesForExtendedLayout = []
         
         setNavigationBar()
@@ -50,7 +50,7 @@ class ListVC: UIViewController {
         
         setUpDataSource()
         bindNotes()
-        
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,6 +66,10 @@ class ListVC: UIViewController {
             target: nil,
             action: nil
         )
+    }
+    
+    deinit {
+        disposeBag = nil
     }
     
     func getView() -> ListView {
@@ -162,16 +166,10 @@ extension ListVC: UITableViewDelegate {
         return swipeActions
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let note = notesObservable.value[indexPath.item]
         let vc = NoteVC(model: note)
         push(vc: vc)
-    }
-}
-
-extension Results {
-    func toArray() -> [Element] {
-        return compactMap { $0 }
     }
 }
 
