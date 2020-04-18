@@ -11,8 +11,9 @@ import Stevia
 
 class ItemRow: UITableViewCell {
     
-    var label = UILabel()
-    var customSeparator = UIView()
+    let noteLabel = UILabel()
+    let dateLabel = UILabel()
+    let customSeparator = UIView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -20,14 +21,20 @@ class ItemRow: UITableViewCell {
         backgroundColor = UIColor(named: "cellBackground")
         selectionStyle = .none
         
-        sv(label, customSeparator.style(customSeparator))
+        sv(
+            noteLabel.style(labelStyle),
+            dateLabel.style(dateLabelStyle),
+            customSeparator.style(customSeparator)
+        )
         
         layout(
-            0,
-            |-20-label-|,
-            0,
+            10,
+            |-10-noteLabel-|,
+            15,
+            |-10-dateLabel,
+            "",
             |-customSeparator-| ~ 1,
-            0
+            -5
         )
         
     }
@@ -38,7 +45,13 @@ class ItemRow: UITableViewCell {
     
     private func labelStyle(_ v: UILabel) {
         v.textColor = UIColor(named: "primaryTextColor")
-        v.font = UIFont.systemFont(ofSize: 15.0, weight: .medium)
+        v.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
+        v.lineBreakMode = .byTruncatingTail
+    }
+    
+    private func dateLabelStyle(_ v: UILabel) {
+        v.textColor = UIColor.lightGray.withAlphaComponent(0.7)
+        v.font = UIFont.systemFont(ofSize: 13.0, weight: .bold)
         v.lineBreakMode = .byTruncatingTail
     }
     
@@ -57,6 +70,9 @@ extension ItemRow {
             .withoutSpecialCharacters
             .withoutNewLineCharacters
         
-        label.text = trimMarkDown
+        noteLabel.text = trimMarkDown
+        if let dateCreated = note.dateCreated {
+            dateLabel.text = dateCreated.shortStringDate
+        }
     }
 }

@@ -101,7 +101,7 @@ extension NoteVC {
     
     private func getNoteOnSameDay() -> Note? {
         let noteOnThisDay = realm.objects(Note.self)
-            .filter("dateCreated == %@", Date().easyDate).first
+            .filter("dateCreated == %@", Date().shortDate!).first
         return noteOnThisDay
     }
 }
@@ -142,7 +142,7 @@ extension NoteVC: NoteViewDelegate {
                 } else {
                     let note = Note()
                     note.writing = writing
-                    note.dateCreated = Date().easyDate!
+                    note.dateCreated = Date().shortDate!
                     realm.add(note)
                 }
             }

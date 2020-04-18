@@ -103,10 +103,12 @@ extension ListVC {
     private func bindNotes() {
         let realmNotes = realm.objects(Note.self)
         Observable.array(from: realmNotes)
+            .map{ $0.sorted { $0.dateCreated! > $1.dateCreated! }}
             .bind(to: self.notesObservable)
             .disposed(by: disposeBag)
-
-        notesObservable.subscribe(onNext: { [weak self] notes in
+        
+        notesObservable
+            .subscribe(onNext: { [weak self] notes in
             self?.updateTableView(animated: false, dataProvider: notes)
         }).disposed(by: disposeBag)
     }

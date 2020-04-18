@@ -21,12 +21,21 @@ class Note: Object {
 }
 
 extension Date {
-    var easyDate: Date? {
+    var shortDate: Date? {
         let format = DateFormatter()
         format.timeStyle = .none
         format.dateStyle = .medium
         format.timeZone = TimeZone(identifier: "UTC")
         let formattedDate = format.string(from: self)
         return format.date(from: formattedDate)
+    }
+    
+    var shortStringDate: String? {
+        let format = DateFormatter()
+        format.timeStyle = .none
+        format.dateStyle = .medium
+        format.timeZone = TimeZone(identifier: "UTC")
+        let formattedDate = format.string(from: self)
+        return formattedDate
     }
 }
